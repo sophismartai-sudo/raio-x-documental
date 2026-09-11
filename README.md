@@ -267,7 +267,9 @@ python3 ~/.agents/skills/raio-x-documental/scripts/verificar.py --doctor
 > o Codex lê — o resultado, os trechos encontrados, o laudo. Para documentos sigilosos, use o Terminal
 > direto (veja **Privacidade**).
 >
-> **Permissões:** o Codex pode pedir sua aprovação para executar o comando ou para gravar o laudo. A
+> **Permissões:** o Codex pode pedir sua aprovação para executar o comando ou para gravar o laudo. No
+> modo **somente leitura**, ele verifica o documento e mostra o veredito normalmente, mas não grava o
+> laudo — para gerar o arquivo, use um modo com permissão de gravação ou aprove quando ele pedir. A
 > ferramenta só lê o documento indicado e só grava na pasta de resultados que você escolher.
 
 ## 🚀 Como usar
