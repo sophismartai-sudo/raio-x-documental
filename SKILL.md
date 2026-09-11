@@ -12,16 +12,22 @@ description: >
 
 Verifica documentos em busca de conteúdo oculto e prompt injection. Determinístico e offline.
 
+## Onde estão os scripts
+
+Nos comandos abaixo, `<skill>` é **a pasta onde está este SKILL.md** — por exemplo
+`~/.claude/skills/raio-x-documental` (Claude Code) ou `~/.agents/skills/raio-x-documental`
+(Codex). Use sempre o caminho real da pasta desta skill.
+
 ## Fluxo
 
-1. Checar dependências: `python3 ~/.claude/skills/raio-x-documental/scripts/verificar.py --doctor`
+1. Checar dependências: `python3 <skill>/scripts/verificar.py --doctor`
 2. Verificar um arquivo (e gerar laudo):
-   `python3 ~/.claude/skills/raio-x-documental/scripts/verificar.py <arquivo> --laudo <dir_saida>`
+   `python3 <skill>/scripts/verificar.py <arquivo> --laudo <dir_saida>`
 3. Ler o veredito no terminal e o laudo HTML gerado. Exit code 1 = CRÍTICO/ALTO.
 4. NÃO alterar o original.
 5. Se o documento não vier LIMPO, a pessoa pode, **se quiser**, gerar uma cópia higienizada (sempre em
    arquivo `.txt` separado — o original nunca é tocado):
-   `python3 ~/.claude/skills/raio-x-documental/scripts/verificar.py <arquivo> --higienizar <dir_saida> --modo ambos`
+   `python3 <skill>/scripts/verificar.py <arquivo> --higienizar <dir_saida> --modo ambos`
    - `--modo neutralizar`: cópia com só o texto visível, sem o conteúdo oculto — segura para colar numa IA.
    - `--modo revelar`: o conteúdo oculto decodificado, exatamente o que estava escrito no trecho malicioso.
    - `--modo ambos` (padrão): gera as duas cópias.
@@ -36,6 +42,12 @@ para fora da pasta selecionada nunca são seguidos. Os resultados (inclusive os 
 são resumidos no terminal e, com `--laudo <dir_saida>`, em `resumo_da_pasta.html`/`.json` dentro do
 diretório de saída, com um laudo individual por documento suspeito.
 
+## Privacidade
+
+A análise roda localmente, mas o assistente de IA que executa esta skill (Claude, Codex) vê o
+resultado e os trechos que ler — e isso passa pela nuvem dele. Para documentos sigilosos, oriente a
+pessoa a rodar o comando direto no Terminal (passo a passo no README), sem assistente.
+
 ## Integridade e autoria
-`python3 ~/.claude/skills/raio-x-documental/scripts/verificar.py --verificar-integridade` confere os arquivos da skill contra `INTEGRIDADE.sha256`.
+`python3 <skill>/scripts/verificar.py --verificar-integridade` confere os arquivos da skill contra `INTEGRIDADE.sha256`.
 Autoria e licença (uso público, não comercial, sem derivações): ver `README.md`, `LICENSE` e `AUTORIA.md` na raiz da skill.

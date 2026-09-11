@@ -63,7 +63,7 @@ imagens (PNG/JPG/TIFF/BMP/WEBP).
 
 - **100% offline, sem rede.** A ferramenta **não envia o documento para lugar
   nenhum** — nenhum upload, nenhuma nuvem, nenhuma chamada externa. Adequado a
-  **sigilo** e à **LGPD**. Atenção: se você a usar **pelo Claude**, o que o
+  **sigilo** e à **LGPD**. Atenção: se você a usar **pelo Claude ou pelo Codex**, o que o
   assistente lê passa pela nuvem — para documentos sigilosos, use o Terminal
   direto (veja **Privacidade** e o **Passo a passo** logo abaixo).
 - **Lê só o que você escolhe.** O arquivo indicado, ou os documentos que estão
@@ -90,14 +90,14 @@ imagens (PNG/JPG/TIFF/BMP/WEBP).
 Há duas coisas diferentes aqui, e vale entender a diferença:
 
 - **A ferramenta** são programas que rodam **no seu computador**. Eles leem o documento do seu disco, analisam e gravam o resultado no seu disco. **Não existe nenhuma linha de código que acesse a internet** — você pode desligar o Wi-Fi e ela funciona igual.
-- **O Claude** (o assistente de IA) funciona **na nuvem**, nos servidores da Anthropic.
+- **Os assistentes de IA** — o Claude e o Codex (ChatGPT) — funcionam **na nuvem**, nos servidores da Anthropic e da OpenAI.
 
 Por isso, existem dois jeitos de usar:
 
-| | **Jeito A — pelo Terminal, direto** | **Jeito B — pedindo ao Claude** |
+| | **Jeito A — pelo Terminal, direto** | **Jeito B — pedindo ao Claude ou ao Codex** |
 |---|---|---|
 | Quem analisa o documento | os programas locais | os mesmos programas locais |
-| O documento sai do computador? | **Não. Nada sai.** | A ferramenta não envia o arquivo, **mas** tudo o que o Claude lê — o resultado, os trechos encontrados, o laudo ou o próprio documento, se você pedir — **passa pelos servidores da Anthropic** |
+| O documento sai do computador? | **Não. Nada sai.** | A ferramenta não envia o arquivo, **mas** tudo o que o assistente lê — o resultado, os trechos encontrados, o laudo ou o próprio documento, se você pedir — **passa pelos servidores da Anthropic (Claude) ou da OpenAI (Codex)** |
 | Indicado para | **documentos sigilosos**, segredo de justiça, dados pessoais (LGPD) | documentos sem sigilo, triagem rápida |
 
 > **Regra de ouro:** documento sigiloso → **Jeito A** (passo a passo logo abaixo). Nunca cole trechos de documento sigiloso numa conversa com qualquer IA.
@@ -238,6 +238,37 @@ python3 ~/.claude/skills/raio-x-documental/scripts/verificar.py --doctor
 Pronto. Dentro do Claude Code, a skill é reconhecida automaticamente e responde a
 pedidos como **"verifica esse documento"**, **"tem prompt injection nesse PDF?"**
 ou **"esse laudo tem texto escondido?"**.
+
+## 🤖 Instalação no Codex (OpenAI / ChatGPT)
+
+A mesma skill funciona no **Codex**, o agente da OpenAI que vem no aplicativo do ChatGPT e também
+na linha de comando e na IDE. O Codex procura skills na pasta pessoal `~/.agents/skills`.
+
+**1. Baixe a skill para a pasta de skills do Codex:**
+```bash
+git clone https://github.com/sophismartai-sudo/raio-x-documental ~/.agents/skills/raio-x-documental
+```
+
+**2. Instale as dependências** — se ainda não instalou para o Claude (o OCR é opcional, como na seção anterior):
+```bash
+python3 -m pip install pymupdf python-docx lxml pillow
+```
+
+**3. Verifique a instalação:**
+```bash
+python3 ~/.agents/skills/raio-x-documental/scripts/verificar.py --doctor
+```
+
+**4. Use.** No Codex, digite `$raio-x-documental` seguido do pedido — por exemplo
+`$raio-x-documental verifica o documento ~/Desktop/laudo.pdf` — ou simplesmente peça
+**"verifica esse documento"**. O Codex detecta skills novas sozinho; se ela não aparecer, reinicie o Codex.
+
+> **Privacidade:** como no Claude, a ferramenta roda no seu computador, mas o modelo da OpenAI vê o que
+> o Codex lê — o resultado, os trechos encontrados, o laudo. Para documentos sigilosos, use o Terminal
+> direto (veja **Privacidade**).
+>
+> **Permissões:** o Codex pode pedir sua aprovação para executar o comando ou para gravar o laudo. A
+> ferramenta só lê o documento indicado e só grava na pasta de resultados que você escolher.
 
 ## 🚀 Como usar
 
