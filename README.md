@@ -75,6 +75,8 @@ imagens (PNG/JPG/TIFF/BMP/WEBP).
 - **Blindada contra documentos-armadilha.** Estruturas XML anômalas em DOCX/ODT
   (declarações `DOCTYPE`/entidade) são sinalizadas no laudo e jamais fazem a
   ferramenta ler outros arquivos ou pular partes do documento.
+- **Auditável por qualquer pessoa.** Código aberto e curto, sem nada escondido — veja a seção
+  **Confira você mesmo** para comprovar, com testes simples, que ela não coleta nem envia nada.
 - **Nunca altera o original.** Toda saída é um arquivo **novo**; o documento de
   origem permanece intacto (byte a byte).
 - **Determinístico e auditável.** Mesmo arquivo → mesmo resultado. Nada de "a IA
@@ -355,6 +357,69 @@ algo foi alterado, adicionado ou removido.
 - Desconfie de qualquer versão "melhorada", "modificada" ou vendida — a licença
   proíbe alteração e venda (veja abaixo).
 - Cada arquivo de código traz o aviso de autoria e licença no cabeçalho.
+
+## 🔎 Confira você mesmo: a ferramenta não coleta nem envia nada
+
+> **Nosso compromisso:** o raio-x-documental **não tem — e nunca terá —** agente oculto, rastreador,
+> telemetria ou qualquer código que colete, copie ou envie informações suas ou dos seus documentos.
+> Você não precisa acreditar na nossa palavra: **confira**. Tudo o que a ferramenta faz está no código
+> aberto desta página — cerca de 1.500 linhas de Python, sem nenhum programa compilado ou escondido
+> (os únicos arquivos que não são texto são os documentos de exemplo, em `exemplos/`).
+
+Os comandos abaixo são rodados **dentro da pasta da ferramenta**. Para entrar nela pelo Terminal, digite
+`cd`, um espaço, arraste a pasta da ferramenta para a janela e aperte **Enter**. No Windows, use `py` no
+lugar de `python3`.
+
+### Para qualquer pessoa
+
+**1. Confirme que a sua cópia é a original** — que ninguém a adulterou pelo caminho:
+```bash
+python3 scripts/verificar.py --verificar-integridade
+```
+Deve responder **"Integridade OK"**.
+
+**2. O teste mais simples: sem internet.** Desligue o Wi-Fi (ou tire o cabo de rede) e use a ferramenta
+normalmente. Ela funciona igual, porque não precisa de internet para nada — e, sem internet, não teria
+como enviar coisa alguma.
+
+**3. Procure no código qualquer comunicação com a internet:**
+- **Mac / Linux:**
+  ```bash
+  grep -rnE "socket|urllib|http\.client|requests|urlopen|ftplib|smtplib|webbrowser" scripts/
+  ```
+- **Windows (PowerShell):**
+  ```powershell
+  Get-ChildItem scripts -Recurse -Filter *.py | Select-String -Pattern "socket|urllib|http\.client|requests|urlopen|ftplib|smtplib|webbrowser"
+  ```
+
+**Resultado esperado: nenhuma linha.** Esses são os recursos que um programa em Python usaria para acessar
+a internet, enviar e-mails ou abrir sites — e nenhum deles aparece no código.
+
+### Para equipes de TI e segurança
+
+- **Único programa externo chamado:** o `tesseract`, leitor de imagens (OCR) que roda no próprio
+  computador. Confira com `grep -rn "subprocess.run" scripts/` — são 3 linhas, todas executando o caminho
+  do tesseract (definido na função `_tesseract()` de `scripts/detectores/imagem.py`), sem `shell=True`.
+- **Nada de código dinâmico ou ofuscado:** `grep -rnE "eval\(|exec\(" scripts/` e
+  `grep -rniE "base64|marshal|pickle" scripts/` não retornam nenhuma linha.
+- **Dependências:** só bibliotecas públicas e amplamente usadas — PyMuPDF (`fitz`), lxml e Pillow (`PIL`),
+  além da python-docx, usada nos testes. O restante é a biblioteca padrão do Python.
+- **Prova com a rede bloqueada pelo próprio sistema (Mac):**
+  ```bash
+  sandbox-exec -p '(version 1)(allow default)(deny network*)' python3 scripts/verificar.py exemplos/injecao_branco.pdf
+  ```
+  A análise roda normalmente (veredito CRÍTICO) com o acesso à rede proibido pelo macOS. Para ver que o
+  bloqueio funciona de verdade, tente acessar a internet com o mesmo prefixo — dá erro:
+  ```bash
+  sandbox-exec -p '(version 1)(allow default)(deny network*)' python3 -c "import urllib.request; urllib.request.urlopen('https://example.com')"
+  ```
+- **No Windows:** crie no Firewall do Windows uma regra de saída que bloqueie o `python.exe` e use a
+  ferramenta normalmente.
+- **O que ela grava:** só o que você pedir (laudo, resumo da pasta, cópias higienizadas), na pasta que
+  você escolher. Durante o OCR, cria arquivos temporários acessíveis só pelo seu usuário e os apaga ao final.
+
+**Encontrou algo suspeito?** Avise pela aba **Issues** deste repositório ou por
+[@sophismart.ai](https://instagram.com/sophismart.ai). Transparência total faz parte da ferramenta.
 
 ## ⚖️ Licença e proibições
 
