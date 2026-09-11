@@ -5,6 +5,9 @@ Uma contribuição pública e gratuita ao Poder Judiciário brasileiro.
 
 `100% offline` · `sem rede` · `não altera o original` · `determinístico e auditável` · `Python 3.9+`
 
+**Três jeitos de usar:** 🖥️ **pelo Terminal**, 100% offline — o jeito certo para documentos sigilosos ·
+🟠 **no Claude Code** · 🟢 **no Codex** (OpenAI / ChatGPT).
+
 ---
 
 ## 💛 Uma palavra de gratidão
@@ -239,29 +242,49 @@ Pronto. Dentro do Claude Code, a skill é reconhecida automaticamente e responde
 pedidos como **"verifica esse documento"**, **"tem prompt injection nesse PDF?"**
 ou **"esse laudo tem texto escondido?"**.
 
-## 🤖 Instalação no Codex (OpenAI / ChatGPT)
+## 🤖 Instalação e uso no Codex (OpenAI / ChatGPT)
 
 A mesma skill funciona no **Codex**, o agente da OpenAI que vem no aplicativo do ChatGPT e também
-na linha de comando e na IDE. O Codex procura skills na pasta pessoal `~/.agents/skills`.
+na linha de comando e na IDE. **Testada no Codex do aplicativo do ChatGPT (Mac):** chamada pelo nome ou
+por um pedido comum, ele encontra a skill, roda a verificação no seu computador e aponta o golpe
+(veredito CRÍTICO) — sem obedecer ao comando escondido.
 
-**1. Baixe a skill para a pasta de skills do Codex:**
+O Codex procura skills na pasta pessoal **`~/.agents/skills`** (no Windows, `%USERPROFILE%\.agents\skills`).
+
+### Instalar — opção A: com um comando
 ```bash
 git clone https://github.com/sophismartai-sudo/raio-x-documental ~/.agents/skills/raio-x-documental
 ```
 
-**2. Instale as dependências** — se ainda não instalou para o Claude (o OCR é opcional, como na seção anterior):
-```bash
-python3 -m pip install pymupdf python-docx lxml pillow
-```
+### Instalar — opção B: sem comandos, baixando o ZIP
+1. Nesta página do GitHub, clique em **"<> Code"** → **"Download ZIP"** e extraia o arquivo.
+2. Renomeie a pasta extraída de **raio-x-documental-main** para **raio-x-documental**.
+3. Abra a pasta de skills do Codex:
+   - **Mac:** no Finder, aperte **Cmd + Shift + G**, digite `~/.agents/skills` e aperte **Enter**;
+   - **Windows:** na barra de endereço do Explorador de Arquivos, digite `%USERPROFILE%\.agents\skills` e aperte **Enter**.
 
-**3. Verifique a instalação:**
-```bash
-python3 ~/.agents/skills/raio-x-documental/scripts/verificar.py --doctor
-```
+   Se a pasta ainda não existir, crie-a com um comando — Mac (Terminal): `mkdir -p ~/.agents/skills` ·
+   Windows (Prompt de Comando): `mkdir %USERPROFILE%\.agents\skills`.
+4. Mova a pasta **raio-x-documental** para dentro dela.
 
-**4. Use.** No Codex, digite `$raio-x-documental` seguido do pedido — por exemplo
-`$raio-x-documental verifica o documento ~/Desktop/laudo.pdf` — ou simplesmente peça
-**"verifica esse documento"**. O Codex detecta skills novas sozinho; se ela não aparecer, reinicie o Codex.
+### Depois de instalar
+- **Dependências** (se ainda não instalou; o OCR é opcional, como no passo a passo):
+  `python3 -m pip install pymupdf python-docx lxml pillow` — no Windows, use `py` no lugar de `python3`.
+- **Conferir:** `python3 ~/.agents/skills/raio-x-documental/scripts/verificar.py --doctor`
+- O Codex detecta skills novas sozinho; se ela não aparecer, reinicie o Codex.
+
+### Como usar no Codex
+Chame pelo nome — `$raio-x-documental` — ou simplesmente peça em português. Exemplos de pedidos:
+- `verifica esse documento: ~/Desktop/laudo.pdf`
+- `$raio-x-documental verifica todos os documentos da pasta ~/Desktop/Conferir e gera os laudos em ~/Desktop/Resultados`
+- `me mostra exatamente o que estava escondido nesse documento`
+- `gera uma cópia neutralizada desse documento, só com o texto visível`
+
+### Atualizar
+- Opção A: `git -C ~/.agents/skills/raio-x-documental pull`
+- Opção B: baixe o ZIP de novo e substitua a pasta **raio-x-documental**.
+
+Depois de atualizar, confira se a sua cópia é a original: `python3 ~/.agents/skills/raio-x-documental/scripts/verificar.py --verificar-integridade`
 
 > **Privacidade:** como no Claude, a ferramenta roda no seu computador, mas o modelo da OpenAI vê o que
 > o Codex lê — o resultado, os trechos encontrados, o laudo. Para documentos sigilosos, use o Terminal
