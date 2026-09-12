@@ -456,9 +456,7 @@ e **Sophismart.ai** ([@sophismart.ai](https://instagram.com/sophismart.ai)).
 
 Ferramenta de **auxílio técnico**. **Não substitui** o exame nem o juízo humano,
 nem a intimação da parte prevista em lei. Um veredito "LIMPO" indica ausência de
-**vetores conhecidos**, não garantia absoluta. Este README e a LICENSE não
-constituem aconselhamento jurídico; recomenda-se revisão por profissional
-habilitado.
+**vetores conhecidos**, não garantia absoluta.
 
 ---
 
