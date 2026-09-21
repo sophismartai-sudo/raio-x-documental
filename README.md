@@ -26,7 +26,7 @@ achado com evidência. É um **auxílio** ao trabalho humano — nunca um substi
 dele.
 
 A magistrados, servidores, peritos, advogados e a todos que zelam pela lisura do
-processo: **obrigado pelo cuidado que vocês têm com cada documento.** Que esta
+processo: **obrigado pelo cuidado que vocês com cada documento.** Que esta
 ferramenta seja uma pequena ajuda nesse cuidado.
 
 — **Murilo Ferreira** ([@agro_muriloferreira](https://instagram.com/agro_muriloferreira)) · **Sophismart.ai** ([@sophismart.ai](https://instagram.com/sophismart.ai))
